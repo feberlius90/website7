@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Animation</title>
+    <link rel="stylesheet" href="love-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Welcome -->
+        <div class="slide active" id="slide1">
+            <div class="content">
+                <h1 class="love-title">LOVE</h1>
+                <div class="hearts-container">
+                    <div class="heart heart1">💖</div>
+                    <div class="heart heart2">💕</div>
+                    <div class="heart heart3">💝</div>
+                </div>
+                <p class="romantic-text">maaf kurang baguss ngakk kayak yang di buat mantanmu tuh</p>
+                <button class="next-btn" onclick="nextSlide()">Selanjutnya</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Romantic Words -->
+        <div class="slide" id="slide2">
+            <div class="content">
+                <h2 class="slide-title">Untukmu Tersayang</h2>
+                <div class="romantic-quotes">
+                    <p class="quote">"i love you"</p>
+                    <p class="quote">"jangan buat bawa bawa org laen lain kali yah"</p>
+                    <p class="quote">"kita ajah cukup"</p>
+                </div>
+                <div class="floating-hearts">
+                    <span class="floating-heart">💗</span>
+                    <span class="floating-heart">💖</span>
+                    <span class="floating-heart">💕</span>
+                </div>
+                <button class="sayang-btn" onclick="showPhotoSlide()">lanjut</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Photo with Apology -->
+        <div class="slide" id="slide3">
+            <div class="content">
+                <h2 class="slide-title">my darling</h2>
+                <div class="photo-container">
+                    <img src="images/nada.jpg" alt="Foto Nada" class="love-photo" />
+                    <div class="photo-overlay"></div>
+                </div>
+                <div class="apology-text">
+                    <p class="apology-message">Dimaapin ngak💔</p>
+                    <p class="apology-detail">Maaf yahh jing.... selama ini gw banyak salah ama lu.....</p>
+                    <div class="heart-animation">
+                        <span class="beating-heart">💝</span>
+                    </div>
+                </div>
+                <button class="restart-btn" onclick="restartAnimation()">Mulai Lagi</button>
+            </div>
+        </div>
+
+        <!-- Navigation dots -->
+        <div class="navigation">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 1;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (n > slides.length) currentSlideIndex = 1;
+            if (n < 1) currentSlideIndex = slides.length;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[currentSlideIndex - 1].classList.add('active');
+            dots[currentSlideIndex - 1].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlideIndex++;
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(n) {
+            currentSlideIndex = n;
+            showSlide(currentSlideIndex);
+        }
+
+        function showPhotoSlide() {
+            currentSlideIndex = 3;
+            showSlide(currentSlideIndex);
+        }
+
+        function restartAnimation() {
+            currentSlideIndex = 1;
+            showSlide(currentSlideIndex);
+        }
+
+        // Auto-rotate romantic quotes
+        const quotes = document.querySelectorAll('.quote');
+        let quoteIndex = 0;
+        
+        function rotateQuotes() {
+            quotes.forEach(quote => quote.style.opacity = '0');
+            setTimeout(() => {
+                quotes[quoteIndex].style.opacity = '1';
+                quoteIndex = (quoteIndex + 1) % quotes.length;
+            }, 500);
+        }
+
+        // Start quote rotation when on slide 2
+        setInterval(() => {
+            if (currentSlideIndex === 2) {
+                rotateQuotes();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
